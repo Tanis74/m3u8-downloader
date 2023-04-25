@@ -279,7 +279,7 @@ func downloadM3u8(mpl *m3u8.MediaPlaylist) {
 			if len(keyStr) > 0 {
 				log.Info("Try to decrypt data by custom key " + keyStr)
 				var key, iv []byte
-				if ivStr != "" {
+				if ivStr != "" && strings.Contains(ivStr, "0x") {
 					iv, err = hex.DecodeString(strings.TrimPrefix(ivStr, "0x"))
 					if err != nil {
 						log.Error("Decode iv failed:" + err.Error())
@@ -316,7 +316,7 @@ func downloadM3u8(mpl *m3u8.MediaPlaylist) {
 					log.Error("Download : " + keyURL + " failed: " + err.Error())
 				}
 
-				if ivStr != "" {
+				if ivStr != "" && strings.Contains(ivStr, "0x") {
 					iv, err = hex.DecodeString(strings.TrimPrefix(ivStr, "0x"))
 					if err != nil {
 						log.Error("Decode iv failed:" + err.Error())
